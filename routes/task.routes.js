@@ -1,9 +1,7 @@
 const router = require("express").Router();
-const Task = require("../models/Task.model.js");
 
 router.post("/", (req, res) => {
-  const { title, content } = req.body;
-  Task.create({ title: title, content: content })
+  Task.create(req.body)
     .then((createdTask) => {
       res.status(201).json(createdTask);
     })
@@ -38,8 +36,7 @@ router.get("/:taskId", (req, res) => {
 
 router.put("/:taskId", (req, res) => {
   const { taskId } = req.params;
-  const { title, content } = req.body;
-  Task.findByIdAndUpdate(taskId, { title: title, content: content })
+  Task.findByIdAndUpdate(taskId, req.body)
     .then((updatedTask) => {
       res.status(200).json(updatedTask);
     })

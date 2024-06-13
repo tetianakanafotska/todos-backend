@@ -6,8 +6,14 @@ const taskSchema = new Schema({
     enum: ["To Do", "In Progress", "Done"],
   },
   title: String,
-  content: String,
+  description: String,
+  priority: {
+    type: String,
+    enum: ["Low", "Medium", "High"],
+  },
+  assignee: String,
   createdAt: { type: Date, default: Date.now },
+  dueDate: Date,
 });
 
 //try () => Date.now - what is the difference
