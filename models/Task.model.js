@@ -3,7 +3,7 @@ const { Schema, model } = require("mongoose");
 const taskSchema = new Schema({
   type: {
     type: String,
-    enum: ["To Do", "In Progress", "Done"],
+    enum: ["toDo", "inProgress", "done"],
   },
   title: String,
   description: String,
@@ -14,6 +14,7 @@ const taskSchema = new Schema({
   assignee: String,
   createdAt: { type: Date, default: Date.now },
   dueDate: Date,
+  orderInList: Number,
 });
 
 //try () => Date.now - what is the difference

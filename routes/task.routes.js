@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const Task = require("../models/Task.model");
 
 router.post("/", (req, res) => {
   Task.create(req.body)
@@ -12,9 +13,22 @@ router.post("/", (req, res) => {
 });
 
 router.get("/", (req, res) => {
-  Task.find({})
+  Task.find(req.body)
     .then((allTasks) => {
       res.status(200).json(allTasks);
+    })
+    .catch((err) => {
+      console.error("Error retrieving all tasks:", err);
+      res.status(500).json({ error: "Failed to retrieve all tasks" });
+    });
+});
+
+router.get("/:taskType", (req, res) => {
+  const { taskType } = req.params;
+  Task.find({ type: taskType })
+    .sort({ orderInList: 1 })
+    .then((tasksOfType) => {
+      res.status(200).json(tasksOfType);
     })
     .catch((err) => {
       console.error("Error retrieving all tasks:", err);
@@ -36,7 +50,8 @@ router.get("/:taskId", (req, res) => {
 
 router.put("/:taskId", (req, res) => {
   const { taskId } = req.params;
-  Task.findByIdAndUpdate(taskId, req.body)
+  console.log("the req body", req.body);
+  Task.findByIdAndUpdate(taskId, req.body, { new: true })
     .then((updatedTask) => {
       res.status(200).json(updatedTask);
     })
