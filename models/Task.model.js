@@ -14,7 +14,7 @@ const taskSchema = new Schema({
   assignee: String,
   createdAt: { type: Date, default: Date.now },
   dueDate: Date,
-  orderInList: Number,
+  position: Number,
 });
 
 module.exports = model("Task", taskSchema);
