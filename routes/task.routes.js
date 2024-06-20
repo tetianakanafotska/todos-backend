@@ -26,7 +26,7 @@ router.get("/", (req, res) => {
 router.get("/:taskType", (req, res) => {
   const { taskType } = req.params;
   Task.find({ type: taskType })
-    .sort({ orderInList: 1 })
+    .sort({ position: 1 })
     .then((tasksOfType) => {
       res.status(200).json(tasksOfType);
     })

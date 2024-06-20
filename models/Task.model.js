@@ -17,6 +17,5 @@ const taskSchema = new Schema({
   orderInList: Number,
 });
 
-//try () => Date.now - what is the difference
-
 module.exports = model("Task", taskSchema);
+//try () => Date.now - what is the difference
