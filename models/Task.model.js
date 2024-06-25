@@ -13,7 +13,7 @@ const taskSchema = new Schema({
   },
   assignee: String,
   createdAt: { type: Date, default: Date.now },
-  dueDate: Date,
+  dueAt: Date,
   position: Number,
 });
 
