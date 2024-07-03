@@ -1,15 +1,18 @@
 const router = require("express").Router();
 const Task = require("../models/Task.model");
+const User = require("../models/User.model");
 
-router.post("/", (req, res) => {
-  Task.create(req.body)
-    .then((createdTask) => {
-      res.status(201).json(createdTask);
-    })
-    .catch((err) => {
-      console.error("Error creating new task:", err);
-      res.status(500).json({ error: "Failed to create a new task" });
-    });
+router.post("/", async (req, res) => {
+  const { userId } = req.body;
+
+  try {
+    const savedTask = await Task.create(req.body);
+    await User.findByIdAndUpdate(userId, { $push: { tasks: savedTask._id } });
+    res.status(201).json(savedTask);
+  } catch (err) {
+    console.error("Error creating task:", err);
+    res.status(500).json({ error: "Failed to create a new task" });
+  }
 });
 
 router.get("/", (req, res) => {
@@ -61,15 +64,21 @@ router.put("/:taskId", (req, res) => {
     });
 });
 
-router.delete("/:taskId", (req, res) => {
+router.delete("/:taskId", async (req, res) => {
   const { taskId } = req.params;
-  Task.findByIdAndDelete(taskId)
-    .then((deletedTask) => {
-      res.status(204).send();
-    })
-    .catch((err) => {
-      console.error("Error deleting task:", err);
-      res.status(500).json({ error: "Failed to delete this task" });
+
+  try {
+    const deletedTask = await Task.findByIdAndDelete(taskId);
+    if (!deletedTask) {
+      return res.status(404).json({ error: "Task not found" });
+    }
+    await User.findByIdAndUpdate(deletedTask._id, {
+      $pull: { tasks: taskId },
     });
+    res.status(204).send();
+  } catch (err) {
+    console.error("Error deleting task", err);
+    res.status(500).json({ error: "Failed to delete this task" });
+  }
 });
 module.exports = router;

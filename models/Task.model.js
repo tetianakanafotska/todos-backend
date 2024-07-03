@@ -15,6 +15,7 @@ const taskSchema = new Schema({
   createdAt: { type: Date, default: Date.now },
   dueAt: Date,
   position: Number,
+  userId: Schema.Types.ObjectId,
 });
 
 module.exports = model("Task", taskSchema);
