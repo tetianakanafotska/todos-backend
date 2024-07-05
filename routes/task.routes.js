@@ -16,7 +16,8 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/", (req, res) => {
-  Task.find(req.body)
+  const { _id } = req.payload;
+  Task.find({ ...req.body, userId: _id })
     .then((allTasks) => {
       res.status(200).json(allTasks);
     })
@@ -28,7 +29,8 @@ router.get("/", (req, res) => {
 
 router.get("/:taskType", (req, res) => {
   const { taskType } = req.params;
-  Task.find({ type: taskType })
+  const { _id } = req.payload;
+  Task.find({ type: taskType, userId: _id })
     .sort({ position: 1 })
     .then((tasksOfType) => {
       res.status(200).json(tasksOfType);

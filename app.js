@@ -2,15 +2,16 @@ const express = require("express");
 const app = express();
 require("./config")(app);
 require("./db");
+const { isAuthenticated } = require("./middleware/jwt.middleware");
 
 const indexRoutes = require("./routes/index.routes");
 app.use("/", indexRoutes);
 
 const taskRoutes = require("./routes/task.routes");
-app.use("/tasks", taskRoutes);
+app.use("/tasks", isAuthenticated, taskRoutes);
 
 const userRoutes = require("./routes/user.routes");
-app.use("/user", userRoutes);
+app.use("/:userId", userRoutes);
 
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
