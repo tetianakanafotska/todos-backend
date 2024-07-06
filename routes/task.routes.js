@@ -74,7 +74,7 @@ router.delete("/:taskId", async (req, res) => {
     if (!deletedTask) {
       return res.status(404).json({ error: "Task not found" });
     }
-    await User.findByIdAndUpdate(deletedTask._id, {
+    await User.findByIdAndUpdate(deletedTask.userId, {
       $pull: { tasks: taskId },
     });
     res.status(204).send();
