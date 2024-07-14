@@ -10,8 +10,8 @@ app.use("/", indexRoutes);
 const taskRoutes = require("./routes/task.routes");
 app.use("/tasks", isAuthenticated, taskRoutes);
 
-// const userRoutes = require("./routes/user.routes");
-// app.use("/:userId", isAuthenticated, userRoutes);
+const userRoutes = require("./routes/user.routes");
+app.use("/user", isAuthenticated, userRoutes);
 
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);

@@ -12,6 +12,7 @@ const storage = new CloudinaryStorage({
   params: {
     folder: "flowBoard-userPics",
     allowed_formats: ["jpg", "png", "webm", "jpeg"],
+    overwrite: true,
     public_id: (req, file) => `${file.originalname}`,
   },
 });
