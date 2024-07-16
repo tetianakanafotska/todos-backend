@@ -13,6 +13,9 @@ app.use("/tasks", isAuthenticated, taskRoutes);
 const userRoutes = require("./routes/user.routes");
 app.use("/user", isAuthenticated, userRoutes);
 
+const imageRoutes = require("./routes/image.routes");
+app.use("/image", isAuthenticated, imageRoutes);
+
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 
