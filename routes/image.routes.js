@@ -12,29 +12,24 @@ router.post("/upload", upload.single("image"), (req, res, next) => {
   res.json({ image: req.file });
 });
 
-router.get("/:publicId", async (req, res) => {
-  const { publicId } = req.params;
+router.delete("/:name", async (req, res) => {
+  const { name } = req.params;
+  const publicId = "flowBoard-userPics/" + name;
 
   try {
-    const result = await cloudinary.api.resource(publicId);
-    res.json({ imageUrl: result.url });
+    const result = await cloudinary.uploader.destroy(publicId);
+    if (result.result === "ok") {
+      res.status(204).send();
+    } else {
+      res.status(500).json({
+        error: "Failed to delete image from Cloudinary",
+        result: result,
+      });
+    }
   } catch (error) {
-    console.error("Error fetching Cloudinary resource:", error);
-    res.status(500).json({ error: "Failed to fetch image from Cloudinary" });
+    console.error("Error deleting image from Cloudinary:", error);
+    res.status(500).json({ error: "Failed to delete image from Cloudinary" });
   }
-});
-
-router.get("/resize/:publicId", (req, res) => {
-  const { publicId } = req.params;
-  const width = req.query.width || 500;
-  const height = req.query.height || 500;
-
-  const imageUrl = cloudinary.url(publicId, {
-    width: width,
-    height: height,
-    crop: "fit",
-  });
-  res.send({ imageUrl });
 });
 
 module.exports = router;
