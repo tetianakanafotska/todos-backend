@@ -11,7 +11,6 @@ const taskSchema = new Schema({
     type: String,
     enum: ["Low", "Medium", "High"],
   },
-  assignee: String,
   createdAt: { type: Date, default: Date.now },
   dueAt: Date,
   position: Number,

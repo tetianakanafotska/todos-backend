@@ -1,6 +1,7 @@
 const logger = require("morgan");
 const cors = require("cors");
 const express = require("express");
+const path = require("path");
 
 const FRONTEND_URL = process.env.ORIGIN || "http://localhost:5173";
 
@@ -12,9 +13,11 @@ module.exports = (app) => {
       origin: [FRONTEND_URL],
     })
   );
-
+  //app.use(express.static(path.join(__dirname, "public")));
+  app.use(express.static("public"));
   app.use(logger("dev"));
   app.use(express.json());
+
   app.use(express.urlencoded({ extended: false }));
 };
 
