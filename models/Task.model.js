@@ -11,11 +11,10 @@ const taskSchema = new Schema({
     type: String,
     enum: ["Low", "Medium", "High"],
   },
-  createdAt: { type: Date, default: Date.now },
+  createdAt: Date,
   dueAt: Date,
   position: Number,
   userId: Schema.Types.ObjectId,
 });
 
 module.exports = model("Task", taskSchema);
-//try () => Date.now - what is the difference
