@@ -1,8 +1,7 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
 
-const MONGO_URI =
-  process.env.MONGODB_URI || "mongodb://127.0.0.1:27017test-ironlauncher";
+const MONGO_URI = process.env.MONGODB_URI;
 
 mongoose
   .connect(MONGO_URI)

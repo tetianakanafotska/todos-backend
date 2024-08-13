@@ -7,7 +7,6 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 
 const FRONTEND_URL = process.env.ORIGIN || "http://localhost:5173";
-console.log("Frontend URL:", FRONTEND_URL);
 
 module.exports = (app) => {
   app.set("trust proxy", 1);
