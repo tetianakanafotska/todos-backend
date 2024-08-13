@@ -1,7 +1,9 @@
+require("dotenv").config();
+require("./db");
 const express = require("express");
 const app = express();
 require("./config")(app);
-require("./db");
+
 const { isAuthenticated } = require("./middleware/jwt.middleware");
 
 const indexRoutes = require("./routes/index.routes");

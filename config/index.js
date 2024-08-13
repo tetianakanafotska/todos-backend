@@ -5,16 +5,17 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 
 const FRONTEND_URL = process.env.ORIGIN || "http://localhost:5173";
+console.log("this is frontedn", FRONTEND_URL);
 
 module.exports = (app) => {
   app.set("trust proxy", 1);
 
   app.use(
     cors({
-      origin: FRONTEND_URL, // Allow requests from this origin
-      methods: ["GET", "POST", "PUT", "DELETE"], // Allow specific methods
-      allowedHeaders: ["Content-Type", "Authorization"], // Allow specific headers
-      credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+      origin: FRONTEND_URL,
+      methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
+      allowedHeaders: ["Content-Type", "Authorization"],
+      credentials: true,
     })
   );
   app.options(
