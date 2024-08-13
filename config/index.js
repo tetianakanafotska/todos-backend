@@ -9,12 +9,23 @@ const FRONTEND_URL = process.env.ORIGIN || "http://localhost:5173";
 module.exports = (app) => {
   app.set("trust proxy", 1);
 
-  // app.use(
-  //   cors({
-  //     origin: [FRONTEND_URL],
-  //   })
-  // );
-  app.use(cors());
+  app.use(
+    cors({
+      origin: FRONTEND_URL, // Allow requests from this origin
+      methods: ["GET", "POST", "PUT", "DELETE"], // Allow specific methods
+      allowedHeaders: ["Content-Type", "Authorization"], // Allow specific headers
+      credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+    })
+  );
+  app.options(
+    "*",
+    cors({
+      origin: FRONTEND_URL,
+      methods: ["GET", "POST", "PUT", "DELETE"],
+      allowedHeaders: ["Content-Type", "Authorization"],
+      credentials: true,
+    })
+  );
   app.use(express.static("public"));
   app.use(logger("dev"));
   app.use(express.json());
