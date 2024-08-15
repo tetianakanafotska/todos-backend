@@ -33,7 +33,6 @@ router.post("/signup", async (req, res) => {
     if (foundUser) {
       return res.status(400).json({ message: "This user already exists" });
     }
-
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password, salt);
 
@@ -42,11 +41,13 @@ router.post("/signup", async (req, res) => {
       password: hashedPassword,
       name,
     });
-    const { email: createdEmail, name: createdName, _id } = createdUser;
-
-    return res
-      .status(201)
-      .json({ email: createdEmail, name: createdName, _id });
+    const { _id } = createdUser;
+    const payload = { _id };
+    const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
+      algorithm: "HS256",
+      expiresIn: "6h",
+    });
+    return res.status(201).json({ authToken: authToken });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: "Internal Server Error" });
