@@ -55,7 +55,6 @@ router.get("/:taskId", (req, res) => {
 
 router.put("/:taskId", (req, res) => {
   const { taskId } = req.params;
-  console.log("the req body", req.body);
   Task.findByIdAndUpdate(taskId, req.body, { new: true })
     .then((updatedTask) => {
       res.status(200).json(updatedTask);

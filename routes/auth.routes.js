@@ -45,7 +45,7 @@ router.post("/signup", async (req, res) => {
     const payload = { _id };
     const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
       algorithm: "HS256",
-      expiresIn: "6h",
+      expiresIn: "30d",
     });
     return res.status(201).json({ authToken: authToken });
   } catch (err) {
@@ -72,7 +72,7 @@ router.post("/login", (req, res) => {
         const payload = { _id };
         const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
           algorithm: "HS256",
-          expiresIn: "6h",
+          expiresIn: "30d",
         });
         res.status(200).json({ authToken: authToken });
       } else {
